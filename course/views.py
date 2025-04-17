@@ -1,8 +1,8 @@
 
-from django.shortcuts import render, get_object_or_404
-from django.views.generic import DetailView, ListView
-from django.views import View
-from course.models import Subjects, Course, Teacher, Group, Video, SubjectVideo
+from django.shortcuts import render
+from django.views.generic import DetailView, ListView, TemplateView
+# from django.views import View
+from course.models import Subjects, Course, Teacher
 
 
 # Create your views here.
@@ -26,10 +26,6 @@ def index(request, course_id:int|None=None):
     return render(request, 'course/index.html', context)
 
 
-class SubjectDetailView(View):
-    model = Subjects
-    template_name = 'course/subject_details.html'
-    context_object_name = 'subject'
 
 
 
@@ -60,10 +56,7 @@ class CourseDetailView(DetailView):
         context = super().get_context_data(**kwargs)
         course=self.get_object()
         teachers = Teacher.objects.filter(group__course=course).distinct()
-        videos = Video.objects.filter(course=course).order_by('order')
         context['teachers'] = teachers
-        context['groups'] = Group.objects.filter(course=course)
-        context['videos'] = videos
         return context
 
 
@@ -83,14 +76,11 @@ class TeacherDetailView(DetailView):
         context = super().get_context_data(**kwargs)
         teacher = self.get_object()
         context['courses_taught'] = Course.objects.filter(group__teacher=teacher).distinct()
-        context['groups_instructed'] = Group.objects.filter(teacher=teacher)
         return context
 
 
 
 
 
-
-
-def blog_show_view(request):
-    return render(request, 'course/blog.html')
+class AboutView(TemplateView):
+    template_name = 'course/about.html'

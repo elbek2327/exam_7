@@ -19,19 +19,6 @@ class Subjects(models.Model): #Category
         return self.title
 
 
-class SubjectVideo(models.Model):
-    """This model is for storing videos to subject model"""
-    subject = models.ForeignKey(Subjects, on_delete=models.CASCADE, related_name='videos')
-    title = models.CharField(max_length=255, blank=True, null=True)
-    video_file = models.FileField(upload_to='subject_videos/')  # Store uploaded video files
-    order = models.IntegerField(default=1)
-    description = models.TextField(blank=True, null=True)
-
-    class Meta:
-        ordering = ['order']
-
-    def __str__(self):
-        return self.title if self.title else str(self.video_file)
 
 
 class Course(models.Model):
@@ -70,20 +57,6 @@ class Teacher(models.Model):
         return self.first_name + " " + self.last_name
 
 
-class Group(models.Model):
-    """This is group model. it will be depended on Teacher and Course"""
-    group_name = models.CharField(max_length=100)
-    course = models.ForeignKey(Course, on_delete=models.CASCADE)
-    teacher = models.ForeignKey(Teacher, on_delete=models.SET_NULL, null=True, blank=True)
-    start_date = models.DateTimeField(auto_now_add=True, null=True, blank=True)
-    end_date = models.DateTimeField(auto_now_add=True, null=True, blank=True)
-    schedule = models.TextField(null=True, blank=True)
-
-    class Meta:
-        verbose_name_plural = "Groups"
-
-    def __str__(self):
-        return f"Group name - {self.group_name}        teacher - {self.teacher}"
 
 def generate_student_id():
     """5 digits student id generator"""
@@ -110,31 +83,3 @@ class Student(models.Model):
         verbose_name_plural = "Students"
 
 
-class Enrollment(models.Model):
-    """This model is for students to put them in groups"""
-    student = models.ForeignKey(Student, on_delete=models.CASCADE, related_name='enrollments')
-    group = models.ForeignKey(Group, on_delete=models.CASCADE, related_name='enrollments')
-    enrollment_date = models.DateTimeField(auto_now_add=True, null=True, blank=True)
-    grade = models.CharField(max_length=10, null=True, blank=True)
-
-    class Meta:
-        verbose_name_plural = "Enrollments"
-        unique_together = ('student', 'group') #student cannot participate in the same group twice
-
-    def __str__(self):
-        return f"Enrollment - {self.student} - {self.enrollment_date}"
-
-
-class Video(models.Model):
-    course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='videos')
-    title = models.CharField(max_length=255, blank=True, null=True)
-    video_file = models.FileField(upload_to='course_videos/')
-    teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE, related_name='videos', null=True, blank=True)
-    order = models.IntegerField(default=1)
-    description = models.TextField(blank=True, null=True)
-
-    class Meta:
-        ordering = ['order']
-
-    def __str__(self):
-        return self.title if self.title else str(self.video_file)
