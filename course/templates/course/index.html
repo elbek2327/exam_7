@@ -1,5 +1,6 @@
 {% extends 'course/base/base.html' %}
 {% load static %}
+{% load price_filters %}
 
 {% block title %}Home{% endblock %}
 {% block index %}
@@ -80,79 +81,27 @@
                 <h5 class="text-primary text-uppercase mb-3" style="letter-spacing: 5px;">Subjects</h5>
                 <h1>Explore Top Subjects</h1>
             </div>
+
+
             <div class="row">
+                {% for subject in subjects %}
                 <div class="col-lg-3 col-md-6 mb-4">
                     <div class="cat-item position-relative overflow-hidden rounded mb-2">
-                        <img class="img-fluid" src="{% static 'course/img/cat-1.jpg' %}" alt="">
-                        <a class="cat-overlay text-white text-decoration-none" href="">
-                            <h4 class="text-white font-weight-medium">Web Design</h4>
-                            <span>100 Courses</span>
+                        {% if subject.image %}
+                            <img src="{{ subject.image.url }}" class="card-img-top img-fluid" alt="{{ subject.title }}">
+                        {% else %}
+                             <div class="bg-light text-center py-4">
+                                 <i class="fas fa-image fa-3x text-secondary"></i>
+                                  <p class="text-muted mt-2">No Image Available</p>
+                              </div>
+                        {% endif %}
+                        <a class="cat-overlay text-white text-decoration-none" href="{% url 'course:subject-detail' pk=subject.id %}">
+                            <h4 class="text-white font-weight-medium">{{ subject.title }}</h4>
+
                         </a>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-6 mb-4">
-                    <div class="cat-item position-relative overflow-hidden rounded mb-2">
-                        <img class="img-fluid" src="{% static 'course/img/cat-2.jpg' %}" alt="">
-                        <a class="cat-overlay text-white text-decoration-none" href="">
-                            <h4 class="text-white font-weight-medium">Development</h4>
-                            <span>100 Courses</span>
-                        </a>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 mb-4">
-                    <div class="cat-item position-relative overflow-hidden rounded mb-2">
-                        <img class="img-fluid" src="{% static 'course/img/cat-3.jpg' %}" alt="">
-                        <a class="cat-overlay text-white text-decoration-none" href="">
-                            <h4 class="text-white font-weight-medium">Game Design</h4>
-                            <span>100 Courses</span>
-                        </a>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 mb-4">
-                    <div class="cat-item position-relative overflow-hidden rounded mb-2">
-                        <img class="img-fluid" src="{% static 'course/img/cat-4.jpg' %}" alt="">
-                        <a class="cat-overlay text-white text-decoration-none" href="">
-                            <h4 class="text-white font-weight-medium">Apps Design</h4>
-                            <span>100 Courses</span>
-                        </a>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 mb-4">
-                    <div class="cat-item position-relative overflow-hidden rounded mb-2">
-                        <img class="img-fluid" src="{% static 'course/img/cat-5.jpg' %}" alt="">
-                        <a class="cat-overlay text-white text-decoration-none" href="">
-                            <h4 class="text-white font-weight-medium">Marketing</h4>
-                            <span>100 Courses</span>
-                        </a>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 mb-4">
-                    <div class="cat-item position-relative overflow-hidden rounded mb-2">
-                        <img class="img-fluid" src="{% static 'course/img/cat-6.jpg' %}" alt="">
-                        <a class="cat-overlay text-white text-decoration-none" href="">
-                            <h4 class="text-white font-weight-medium">Research</h4>
-                            <span>100 Courses</span>
-                        </a>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 mb-4">
-                    <div class="cat-item position-relative overflow-hidden rounded mb-2">
-                        <img class="img-fluid" src="{% static 'course/img/cat-7.jpg' %}" alt="">
-                        <a class="cat-overlay text-white text-decoration-none" href="">
-                            <h4 class="text-white font-weight-medium">Content Writing</h4>
-                            <span>100 Courses</span>
-                        </a>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 mb-4">
-                    <div class="cat-item position-relative overflow-hidden rounded mb-2">
-                        <img class="img-fluid" src="{% static 'course/img/cat-8.jpg' %}" alt="">
-                        <a class="cat-overlay text-white text-decoration-none" href="">
-                            <h4 class="text-white font-weight-medium">SEO</h4>
-                            <span>100 Courses</span>
-                        </a>
-                    </div>
-                </div>
+                {% endfor %}
             </div>
         </div>
     </div>
@@ -161,123 +110,52 @@
 
     <!-- Courses Start -->
     <div class="container-fluid py-5">
-        <div class="container py-5">
-            <div class="text-center mb-5">
-                <h5 class="text-primary text-uppercase mb-3" style="letter-spacing: 5px;">Courses</h5>
-                <h1>Our Popular Courses</h1>
+    <div class="container py-5">
+        <div class="text-center mb-5">
+            <h5 class="text-primary text-uppercase mb-3" style="letter-spacing: 5px;">Courses</h5>
+            <h1>Our Popular Courses</h1>
+        </div>
+
+        <div class="row">
+    {% for course in courses %}
+    <div class="col-lg-4 col-md-6 mb-4">
+        <div class="card shadow-sm h-100">
+            {% if course.image %}
+            <img src="{{ course.image.url }}" class="card-img-top img-fluid" alt="{{ course.title }}">
+            {% else %}
+            <div class="bg-light text-center py-4">
+                <i class="fas fa-image fa-3x text-secondary"></i>
+                <p class="text-muted mt-2">No Image Available</p>
             </div>
-            <div class="row">
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="rounded overflow-hidden mb-2">
-                        <img class="img-fluid" src="{% static 'course/img/course-1.jpg' %}" alt="">
-                        <div class="bg-secondary p-4">
-                            <div class="d-flex justify-content-between mb-3">
-                                <small class="m-0"><i class="fa fa-users text-primary mr-2"></i>25 Students</small>
-                                <small class="m-0"><i class="far fa-clock text-primary mr-2"></i>01h 30m</small>
-                            </div>
-                            <a class="h5" href="">Web design & development courses for beginner</a>
-                            <div class="border-top mt-4 pt-4">
-                                <div class="d-flex justify-content-between">
-                                    <h6 class="m-0"><i class="fa fa-star text-primary mr-2"></i>4.5 <small>(250)</small></h6>
-                                    <h5 class="m-0">$99</h5>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+            {% endif %}
+            <div class="card-body bg-light d-flex flex-column">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <small class="text-muted"><i class="far fa-clock mr-2"></i>Duration - {{ course.duration }}<i>months</i></small>
+
                 </div>
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="rounded overflow-hidden mb-2">
-                        <img class="img-fluid" src="{% static 'course/img/course-2.jpg' %}" alt="">
-                        <div class="bg-secondary p-4">
-                            <div class="d-flex justify-content-between mb-3">
-                                <small class="m-0"><i class="fa fa-users text-primary mr-2"></i>25 Students</small>
-                                <small class="m-0"><i class="far fa-clock text-primary mr-2"></i>01h 30m</small>
+                <h5 class="card-title"><a href="{% url 'course:course_detail' pk=course.id %}" class="text-dark stretched-link">{{ course.title }}</a></h5>
+                <p class="card-text text-muted">{{ course.description|truncatewords:20 }}</p>
+                <h6 class="card-subtitle text-primary">{{ course.price|format_price }}so'm</h6>
+
+            </div>
+            <div class="card-footer bg-transparent border-top-0 p-3">
+                <div class="d-flex justify-content-between mb-3">
+                                <small class="m-0"><i class="fa fa-users text-primary mr-2"></i>{{ course.student_study }} Students</small>
+                                <small class="m-0"><i class="far fa-clock text-primary mr-2"></i>{{ course.lesson_hours }} Hours</small>
                             </div>
-                            <a class="h5" href="">Web design & development courses for beginner</a>
-                            <div class="border-top mt-4 pt-4">
-                                <div class="d-flex justify-content-between">
-                                    <h6 class="m-0"><i class="fa fa-star text-primary mr-2"></i>4.5 <small>(250)</small></h6>
-                                    <h5 class="m-0">$99</h5>
-                                </div>
-                            </div>
-                        </div>
+                <div class="d-flex justify-content-between align-items-center">
+                    <small class="text-warning"><i class="fas fa-star"></i>{{ course.rating }}</small>
                     </div>
-                </div>
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="rounded overflow-hidden mb-2">
-                        <img class="img-fluid" src="{% static 'course/img/course-3.jpg' %}" alt="">
-                        <div class="bg-secondary p-4">
-                            <div class="d-flex justify-content-between mb-3">
-                                <small class="m-0"><i class="fa fa-users text-primary mr-2"></i>25 Students</small>
-                                <small class="m-0"><i class="far fa-clock text-primary mr-2"></i>01h 30m</small>
-                            </div>
-                            <a class="h5" href="">Web design & development courses for beginner</a>
-                            <div class="border-top mt-4 pt-4">
-                                <div class="d-flex justify-content-between">
-                                    <h6 class="m-0"><i class="fa fa-star text-primary mr-2"></i>4.5 <small>(250)</small></h6>
-                                    <h5 class="m-0">$99</h5>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="rounded overflow-hidden mb-2">
-                        <img class="img-fluid" src="{% static 'course/img/course-4.jpg' %}" alt="">
-                        <div class="bg-secondary p-4">
-                            <div class="d-flex justify-content-between mb-3">
-                                <small class="m-0"><i class="fa fa-users text-primary mr-2"></i>25 Students</small>
-                                <small class="m-0"><i class="far fa-clock text-primary mr-2"></i>01h 30m</small>
-                            </div>
-                            <a class="h5" href="">Web design & development courses for beginner</a>
-                            <div class="border-top mt-4 pt-4">
-                                <div class="d-flex justify-content-between">
-                                    <h6 class="m-0"><i class="fa fa-star text-primary mr-2"></i>4.5 <small>(250)</small></h6>
-                                    <h5 class="m-0">$99</h5>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="rounded overflow-hidden mb-2">
-                        <img class="img-fluid" src="{% static 'course/img/course-5.jpg' %}" alt="">
-                        <div class="bg-secondary p-4">
-                            <div class="d-flex justify-content-between mb-3">
-                                <small class="m-0"><i class="fa fa-users text-primary mr-2"></i>25 Students</small>
-                                <small class="m-0"><i class="far fa-clock text-primary mr-2"></i>01h 30m</small>
-                            </div>
-                            <a class="h5" href="">Web design & development courses for beginner</a>
-                            <div class="border-top mt-4 pt-4">
-                                <div class="d-flex justify-content-between">
-                                    <h6 class="m-0"><i class="fa fa-star text-primary mr-2"></i>4.5 <small>(250)</small></h6>
-                                    <h5 class="m-0">$99</h5>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="rounded overflow-hidden mb-2">
-                        <img class="img-fluid" src="{% static 'course/img/course-6.jpg' %}" alt="">
-                        <div class="bg-secondary p-4">
-                            <div class="d-flex justify-content-between mb-3">
-                                <small class="m-0"><i class="fa fa-users text-primary mr-2"></i>25 Students</small>
-                                <small class="m-0"><i class="far fa-clock text-primary mr-2"></i>01h 30m</small>
-                            </div>
-                            <a class="h5" href="">Web design & development courses for beginner</a>
-                            <div class="border-top mt-4 pt-4">
-                                <div class="d-flex justify-content-between">
-                                    <h6 class="m-0"><i class="fa fa-star text-primary mr-2"></i>4.5 <small>(250)</small></h6>
-                                    <h5 class="m-0">$99</h5>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <div class="mt-auto">
+                    <a href="#" class="btn btn-outline-primary btn-sm">View Details</a>
                 </div>
             </div>
         </div>
     </div>
+    {% endfor %}
+</div>
+    </div>
+</div>
     <!-- Courses End -->
 
 
@@ -340,71 +218,37 @@
                 <h5 class="text-primary text-uppercase mb-3" style="letter-spacing: 5px;">Teachers</h5>
                 <h1>Meet Our Teachers</h1>
             </div>
+
             <div class="row">
+                 {% for teacher in teachers %}
                 <div class="col-md-6 col-lg-3 text-center team mb-4">
                     <div class="team-item rounded overflow-hidden mb-2">
                         <div class="team-img position-relative">
-                            <img class="img-fluid" src="{% static 'course/img/team-1.jpg' %}" alt="">
+                           {% if teacher.teacher_image %}
+                            <img src="{{ teacher.teacher_image.url }}" class="card-img-top img-fluid" alt="{{ teacher.first_name }} {{ teacher.last_name }}">
+                            {% else %}
+                                <div class="bg-light text-center py-4">
+                            <i class="fas fa-image fa-3x text-secondary"></i>
+                            <p class="text-muted mt-2">No Image Available</p>
+                            </div>
+                            {% endif %}
                             <div class="team-social">
                                 <a class="btn btn-outline-light btn-square mx-1" href="#"><i class="fab fa-twitter"></i></a>
                                 <a class="btn btn-outline-light btn-square mx-1" href="#"><i class="fab fa-facebook-f"></i></a>
                                 <a class="btn btn-outline-light btn-square mx-1" href="#"><i class="fab fa-linkedin-in"></i></a>
                             </div>
                         </div>
+                        </div>
                         <div class="bg-secondary p-4">
-                            <h5>Jhon Doe</h5>
-                            <p class="m-0">Web Designer</p>
+                            <h5>{{ teacher.first_name }} {{ teacher.last_name }}</h5>
+                            <p class="m-0">{{ teacher.works_as }}</p>
+
+
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6 col-lg-3 text-center team mb-4">
-                    <div class="team-item rounded overflow-hidden mb-2">
-                        <div class="team-img position-relative">
-                            <img class="img-fluid" src="{% static 'course/img/team-2.jpg' %}" alt="">
-                            <div class="team-social">
-                                <a class="btn btn-outline-light btn-square mx-1" href="#"><i class="fab fa-twitter"></i></a>
-                                <a class="btn btn-outline-light btn-square mx-1" href="#"><i class="fab fa-facebook-f"></i></a>
-                                <a class="btn btn-outline-light btn-square mx-1" href="#"><i class="fab fa-linkedin-in"></i></a>
-                            </div>
-                        </div>
-                        <div class="bg-secondary p-4">
-                            <h5>Jhon Doe</h5>
-                            <p class="m-0">Web Designer</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-3 text-center team mb-4">
-                    <div class="team-item rounded overflow-hidden mb-2">
-                        <div class="team-img position-relative">
-                            <img class="img-fluid" src="{% static 'course/img/team-3.jpg' %}" alt="">
-                            <div class="team-social">
-                                <a class="btn btn-outline-light btn-square mx-1" href="#"><i class="fab fa-twitter"></i></a>
-                                <a class="btn btn-outline-light btn-square mx-1" href="#"><i class="fab fa-facebook-f"></i></a>
-                                <a class="btn btn-outline-light btn-square mx-1" href="#"><i class="fab fa-linkedin-in"></i></a>
-                            </div>
-                        </div>
-                        <div class="bg-secondary p-4">
-                            <h5>Jhon Doe</h5>
-                            <p class="m-0">Web Designer</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-3 text-center team mb-4">
-                    <div class="team-item rounded overflow-hidden mb-2">
-                        <div class="team-img position-relative">
-                            <img class="img-fluid" src="{% static 'course/img/team-4.jpg' %}" alt="">
-                            <div class="team-social">
-                                <a class="btn btn-outline-light btn-square mx-1" href="#"><i class="fab fa-twitter"></i></a>
-                                <a class="btn btn-outline-light btn-square mx-1" href="#"><i class="fab fa-facebook-f"></i></a>
-                                <a class="btn btn-outline-light btn-square mx-1" href="#"><i class="fab fa-linkedin-in"></i></a>
-                            </div>
-                        </div>
-                        <div class="bg-secondary p-4">
-                            <h5>Jhon Doe</h5>
-                            <p class="m-0">Web Designer</p>
-                        </div>
-                    </div>
-                </div>
+                {% endfor %}
+
             </div>
         </div>
     </div>
@@ -490,4 +334,6 @@
     </div>
     <!-- Blog End -->
 
+
 {% endblock %}
+

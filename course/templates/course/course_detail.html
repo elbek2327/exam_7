@@ -1,0 +1,223 @@
+{% extends 'course/base/base.html' %}
+{% load static %}
+{% load price_filters %}
+{% block index %}
+
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-10 course-detail-container p-4 bg-white rounded shadow-sm">
+
+                <div class="course-image-container mb-4">
+                    {% if course.image %}
+                        <img src="{{ course.image.url }}" alt="{{ course.title }}" class="course-image">
+                    {% else %}
+                        <div class="bg-light text-center py-5">
+                            <i class="fas fa-image fa-4x text-secondary mb-3"></i>
+                            <p class="text-muted">No Image Available</p>
+                        </div>
+                    {% endif %}
+                </div>
+
+                <h1 class="course-title">{{ course.title }}</h1>
+                <p class="course-info">
+                    <i class="far fa-clock"></i> Duration: {{ course.duration }} hours
+                    {% if course.subject %}
+                        <span class="ml-3"><i class="fas fa-tag"></i> Subject: {{ course.subject.title }}</span>
+                    {% endif %}
+                    <span class="ml-3"><i class="fas fa-star text-warning"></i> Rating: {{ course.rating }}</span>
+                </p>
+
+                <p class="course-description">{{ course.description }}</p>
+
+                <p class="course-price">Price: {{ course.price|format_price }}so'm</p>
+                <button class="enroll-button">Enroll Now</button>
+
+                <h2 class="section-title mt-4">Course Videos</h2>
+                <div class="row justify-content-center">
+                    {% if videos %}
+                        {% for video in videos %}
+                            <div class="col-md-8 mb-4">
+                                <div class="card shadow-sm">
+                                    <div class="video-container rounded overflow-hidden">
+                                        <video controls class="w-100">
+                                            <source src="{{ video.video_file.url }}" type="video/mp4">
+                                            Your browser does not support the video tag.
+                                        </video>
+                                    </div>
+                                    {% if video.title %}
+                                        <div class="card-body">
+                                            <h6 class="card-title text-center">{{ video.title }}</h6>
+                                            {% if video.description %}
+                                                <p class="card-text text-muted text-center">{{ video.description }}</p>
+                                            {% endif %}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <div class="col-12 text-center">
+                            <p class="text-muted">No videos available for this course yet.</p>
+                        </div>
+                    {% endif %}
+                </div>
+
+                <h2 class="section-title mt-4">Teacher(s)</h2>
+                <div class="instructor-info">
+                    {% for teacher in teachers %}
+                        <div class="row align-items-center mb-3">
+                            <div class="col-md-3">
+                                {% if teacher.teacher_image %}
+                                    <div class="instructor-image-container rounded-circle overflow-hidden" style="width: 100px; height: 100px;">
+                                        <img src="{{ teacher.teacher_image.url }}" alt="{{ teacher.first_name }} {{ teacher.last_name }}" class="instructor-image w-100 h-100 object-fit-cover">
+                                    </div>
+                                {% else %}
+                                    <div class="instructor-image-container rounded-circle bg-light text-center d-flex align-items-center justify-content-center" style="width: 100px; height: 100px;">
+                                        <i class="fas fa-user-circle fa-3x text-secondary"></i>
+                                    </div>
+                                {% endif %}
+                            </div>
+                            <div class="col-md-9">
+                                <h3 class="instructor-name">{{ teacher.first_name }} {{ teacher.last_name }}</h3>
+                                {% if teacher.email %}
+                                    <p class="instructor-bio"><i class="fas fa-envelope mr-2"></i> {{ teacher.email }}</p>
+                                {% endif %}
+                                {% if teacher.works_as %}
+                                    <p class="instructor-bio"><i class="fas fa-briefcase mr-2"></i> {{ teacher.works_as }}</p>
+                                {% endif %}
+                                <a href="{% url 'teacher_detail' teacher.pk %}" class="btn btn-sm btn-outline-primary">View Profile</a>
+                            </div>
+                        </div>
+                    {% empty %}
+                        <p class="text-muted">No teachers assigned to this course yet.</p>
+                    {% endfor %}
+                </div>
+
+                <h2 class="section-title mt-4">Groups</h2>
+                {% if groups %}
+                    <ul class="list-unstyled">
+                        {% for group in groups %}
+                            <li class="mb-2">
+                                {{ group.group_name }} (Taught by:
+                                {% if group.teacher %}
+                                    <a href="{% url 'teacher_detail' group.teacher.pk %}">
+                                        {{ group.teacher.first_name }} {{ group.teacher.last_name }}
+                                    </a>)
+                                {% else %}
+                                    <span class="text-muted">No Teacher Assigned</span>)
+                                {% endif %}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p class="text-muted">No groups available for this course yet.</p>
+                {% endif %}
+
+            </div>
+        </div>
+    </div>
+    <style>
+        body {
+            font-family: sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+        }
+        .course-detail-container {
+            background-color: #fff;
+            padding: 30px;
+            margin-top: 30px;
+            margin-bottom: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .course-image-container {
+            overflow: hidden;
+            border-radius: 6px;
+            margin-bottom: 20px;
+        }
+        .course-image {
+            width: 100%;
+            display: block;
+            object-fit: cover; /* Ensure image covers the container */
+            max-height: 300px; /* Adjust as needed */
+        }
+        .course-title {
+            font-size: 2.5rem;
+            color: #007bff;
+            margin-bottom: 15px;
+        }
+        .course-info {
+            margin-bottom: 20px;
+            color: #555;
+        }
+        .course-info i {
+            margin-right: 5px;
+            color: #007bff;
+        }
+        .course-description {
+            line-height: 1.8;
+            margin-bottom: 25px;
+        }
+        .course-price {
+            font-size: 1.8rem;
+            color: #28a745;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        .enroll-button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 6px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .enroll-button:hover {
+            background-color: #0056b3;
+        }
+        .section-title {
+            font-size: 1.5rem;
+            color: #007bff;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #007bff;
+            padding-bottom: 5px;
+        }
+        .instructor-info {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .instructor-image-container {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin-right: 15px;
+        }
+        .instructor-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        .instructor-name {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        .instructor-bio {
+            color: #555;
+            font-size: 0.9rem;
+        }
+        .video-container {
+            border: 1px solid #ddd;
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
+{% endblock %}

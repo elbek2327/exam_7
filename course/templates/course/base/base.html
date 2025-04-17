@@ -41,7 +41,7 @@
                     <i class="fa fa-2x fa-map-marker-alt text-primary mr-3"></i>
                     <div class="text-left">
                         <h6 class="font-weight-semi-bold mb-1">Our Office</h6>
-                        <small>123 Street, New York, USA</small>
+                        <small>Tashkent,Uzbekistan</small>
                     </div>
                 </div>
             </div>
@@ -50,7 +50,7 @@
                     <i class="fa fa-2x fa-envelope text-primary mr-3"></i>
                     <div class="text-left">
                         <h6 class="font-weight-semi-bold mb-1">Email Us</h6>
-                        <small>info@example.com</small>
+                        <small>elbekzubaydullayev249@gmail.com</small>
                     </div>
                 </div>
             </div>
@@ -59,7 +59,7 @@
                     <i class="fa fa-2x fa-phone text-primary mr-3"></i>
                     <div class="text-left">
                         <h6 class="font-weight-semi-bold mb-1">Call Us</h6>
-                        <small>+012 345 6789</small>
+                        <small>+998 99 459 72 57</small>
                     </div>
                 </div>
             </div>
@@ -80,7 +80,7 @@
             <nav class="collapse position-absolute navbar navbar-vertical navbar-light align-items-start p-0 border border-top-0 border-bottom-0 bg-light" id="navbar-vertical" style="width: calc(100% - 30px); z-index: 9;">
                 {% for subject in subjects %}
                 <div class="navbar-nav w-100">
-                    <a href="" class="nav-item nav-link">{{ subject.title }}</a>
+                    <a href="#" class="nav-item nav-link">{{ subject.title }}</a>
                 </div>
                 {% endfor %}
             </nav>
@@ -96,10 +96,10 @@
                     </button>
                     <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                         <div class="navbar-nav py-0">
-                            <a href="index.html" class="nav-item nav-link active">Home</a>
+                            <a href="{% url 'course:home' %}" class="nav-item nav-link active">Home</a>
                             <a href="about.html" class="nav-item nav-link">About</a>
-                            <a href="course.html" class="nav-item nav-link">Courses</a>
-                            <a href="teacher.html" class="nav-item nav-link">Teachers</a>
+                            <a href="{% url 'course:course_list_view' %}" class="nav-item nav-link">Courses</a>
+                            <a href="{% url 'course:teachers_list' %}" class="nav-item nav-link">Teachers</a>
                             <div class="nav-item dropdown">
                                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Blog</a>
                                 <div class="dropdown-menu rounded-0 m-0">
