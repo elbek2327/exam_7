@@ -34,13 +34,16 @@ ALLOWED_HOSTS = ['*'] #for deployment purposes it is opened
 # Application definition
 
 INSTALLED_APPS = [
+    'jazzmin',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'phonenumber_field',
     'course.apps.CourseConfig',
+    'user.apps.UserConfig',
 ]
 
 MIDDLEWARE = [
@@ -77,12 +80,22 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'online_course',
+        'USER': 'postgres',
+        'PASSWORD': '1212',  # Replace with the actual password
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
+
+
+
+# User model
+AUTH_USER_MODEL = 'user.CustomUser'
 
 
 # Password validation
@@ -130,3 +143,9 @@ MEDIA_URL = '/media/'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+JAZZMIN_SETTINGS = {
+    'site_title': 'Django Exam 7',
+    'site_header': 'Django Exam 7',
+}
