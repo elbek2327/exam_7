@@ -1,7 +1,6 @@
 
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import DetailView, ListView, TemplateView
-# from django.views import View
 from course.models import Subjects, Course, Teacher, CourseVideSave
 
 
@@ -67,13 +66,14 @@ class CourseShowListView(ListView):
 
 class CourseDetailShowView(DetailView):
     """This is for showing all courses when entered by its id"""
-    model = Course
+    model = Course, CourseVideSave
     template_name = 'course/course_detail.html'
     context_object_name = 'course'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['course_video'] = CourseVideSave.objects.all()
+        course = self.get_object()
+        context['course_videos'] = CourseVideSave.objects.filter(course=course)
         return context
 
 
@@ -84,13 +84,17 @@ class CourseDetailView(DetailView):
     model = Course
     context_object_name = 'course'
     courses = Course.objects.all
-    # def get_context_data(self, **kwargs):
-    #     context = super().get_context_data(**kwargs)
-    #     course=self.get_object()
-    #     courses = course.objects.filter(pk=course.pk)
-    #     context['courses'] = courses
-    #     return context
 
+
+class CourseVideoView(DetailView):
+    model = CourseVideSave
+    template_name = 'course/course_video.html'
+    context_object_name = 'course_video'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['course_video'] = self.object
+        return context
 
 
 class TeacherListView(ListView):

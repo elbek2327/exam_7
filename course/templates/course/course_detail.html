@@ -1,6 +1,8 @@
- <!DOCTYPE html>
- <html lang="en">
- <head>
+{% extends 'course/base/base.html' %}
+{% load price_filters %}
+{% load static %}
+
+{% block course %}
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Advanced TypeScript Course</title>
@@ -48,17 +50,7 @@
   </style>
  </head>
  <body class="bg-gray-100">
-  <header class="bg-white shadow-md py-4">
-  <div class="container">
-  <div class="flex justify-between items-center">
-  <a href="#" class="text-xl font-bold text-blue-600">Sammi Academy</a>
-  <nav class="hidden md:block">
-  <ul class="flex space-x-6">
-  <li><a href="#" class="text-gray-700 hover:text-blue-600 transition-colors">Courses</a></li>
-  <li><a href="#" class="text-gray-700 hover:text-blue-600 transition-colors">Projects</a></li>
-  <li><a href="#" class="text-gray-700 hover:text-blue-600 transition-colors">About Us</a></li>
-  </ul>
-  </nav>
+
 
 
 
@@ -90,10 +82,10 @@
   </div>
 
 
-  <main class="container py-8">
-  <section class="bg-cover rounded-lg py-20 px-8" style="background-image: url('https://www.sammi.ac/uploads/images/courses/631d4598e9837.webp');">
-  <div class="text-white">
-  <h1 class="text-4xl font-bold">{{ course.title }}</h1>
+  <main class="container py-8" >
+  <section class="bg-cover rounded-lg py-20 px-8" style="background-image: url('https://www.sammi.ac/uploads/images/courses/631d4598e9837.webp'); background-color: #1b1e21">
+  <div class="text-white" >
+  <h1 class="text-4xl font-bold" >{{ course.title }}</h1>
   <p class="mt-4 text-lg">{{ course.less_description }}</p>
   </div>
   </section>
@@ -101,6 +93,7 @@
   <div>
   <h2 class="text-2xl font-semibold text-gray-800 mb-4">Kurs haqida</h2>
   <p class="text-gray-700 leading-relaxed">{{ course.description }}</p>
+      <p class="text-gray-700 leading-relaxed">Price: {{ course.price|format_price }}so'm</p>
   </div>
   <div>
   <h2 class="text-2xl font-semibold text-gray-800 mb-4">Nima uchun aynan biz?</h2>
@@ -115,52 +108,20 @@
 
 
       <!--Videolar-->
-  <section class="mt-8">
-  <h2 class="text-2xl font-semibold text-gray-800 mb-4">Kurs dasturi</h2>
+   <section class="mt-8">
+ <h2 class="text-2xl font-semibold text-gray-800 mb-4">Kurs dasturi</h2>
 
-      <div class="space-y-4">
-  <div class="bg-white rounded-lg shadow-md p-4">
-  <h3 class="text-lg font-semibold text-blue-600">{{ course_video.title }}</h3>
-  <p class="text-gray-700">TypeScript'ga kirish, o'rnatish, konfiguratsiya</p>
-  </div>
-  <div class="bg-white rounded-lg shadow-md p-4">
-  <h3 class="text-lg font-semibold text-blue-600">2-modul: Asosiy tiplar</h3>
-  <p class="text-gray-700">Number, string, boolean, null, undefined, void, any, never</p>
-  </div>
-  <div class="bg-white rounded-lg shadow-md p-4">
-  <h3 class="text-lg font-semibold text-blue-600">3-modul: Murakkab tiplar</h3>
-  <p class="text-gray-700">Array, tuple, object, enum, union, intersection</p>
-  </div>
-  <div class="bg-white rounded-lg shadow-md p-4">
-  <h3 class="text-lg font-semibold text-blue-600">4-modul: Funksiyalar</h3>
-  <p class="text-gray-700">Funksiya tiplari, parametrlar, qaytariladigan qiymatlar, yuklanish</p>
-  </div>
-  <div class="bg-white rounded-lg shadow-md p-4">
-  <h3 class="text-lg font-semibold text-blue-600">5-modul: Interfeyslar</h3>
-  <p class="text-gray-700">Interfeys ta'rifi, merosxo'rlik, gibrid tiplar</p>
-  </div>
-  <div class="bg-white rounded-lg shadow-md p-4">
-  <h3 class="text-lg font-semibold text-blue-600">6-modul: Klasslar</h3>
-  <p class="text-gray-700">Klass ta'rifi, xususiyatlar, metodlar, merosxo'rlik, inkapsulyatsiya</p>
-  </div>
-  <div class="bg-white rounded-lg shadow-md p-4">
-  <h3 class="text-lg font-semibold text-blue-600">7-modul: Generiklar</h3>
-  <p class="text-gray-700">Generik funksiyalar, interfeyslar, klasslar, cheklovlar</p>
-  </div>
-  <div class="bg-white rounded-lg shadow-md p-4">
-  <h3 class="text-lg font-semibold text-blue-600">8-modul: Conditional va mapped type'lar</h3>
-  <p class="text-gray-700">Conditional type'lar, mapped type'lar, infer</p>
-  </div>
-  <div class="bg-white rounded-lg shadow-md p-4">
-  <h3 class="text-lg font-semibold text-blue-600">9-modul: Dekoratorlar</h3>
-  <p class="text-gray-700">Klass, metod, property, parametr dekoratorlari</p>
-  </div>
-  <div class="bg-white rounded-lg shadow-md p-4">
-  <h3 class="text-lg font-semibold text-blue-600">10-modul: Modullilik</h3>
-  <p class="text-gray-700">Modullarni yaratish, import qilish, export qilish</p>
-  </div>
-  </div>
-  </section>
+     <div class="space-y-4">
+         {% for video in course_videos %}
+           <div class="mt-4 p-3 border rounded-md">
+               <h3 class="text-lg font-semibold text-blue-600">{{ video.title }}</h3>
+               <p class="text-gray-700">{{ video.description }}</p>
+           </div>
+       {% empty %}
+           <p class="text-gray-500">No videos available for this course.</p>
+       {% endfor %}
+ </div>
+ </section>
   </main>
   <script>
   const mobileMenuButton = document.getElementById('mobile-menu-button');
@@ -174,4 +135,4 @@
   });
   </script>
  </body>
- </html>
+ {% endblock %}

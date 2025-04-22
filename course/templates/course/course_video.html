@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ course_video.title }}</title>
+</head>
+<body>
+    <h1>Title - {{ course_video.title }}</h1>
+    <video controls width="640" height="360">
+        <source src="{{ course_video.video.url }}" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+</body>
+</html>
