@@ -1,0 +1,23 @@
+<h1>Courses for {{ subject.title }}</h1>
+
+{% if courses %}
+    <ul>
+        {% for course in courses %}
+            <li>
+                <a href = {% url 'course:course_detail_id' pk=course.id %}>{{ course.title }}</a>
+                - Price: {{ course.price }}</li>
+{#            {% if %}#}
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No courses available for {{ subject.title }}.</p>
+{% endif %}
+
+
+
+<h2>All Subjects</h2>
+<ul>
+    {% for all_subject in all_subjects %}
+        <li><a href="{% url 'course:course_by_subject' all_subject.id %}">{{ all_subject.title }}</a></li>
+    {% endfor %}
+</ul>

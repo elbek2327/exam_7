@@ -1,8 +1,8 @@
 
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.views.generic import DetailView, ListView, TemplateView
 # from django.views import View
-from course.models import Subjects, Course, Teacher
+from course.models import Subjects, Course, Teacher, CourseVideSave
 
 
 # Create your views here.
@@ -26,14 +26,15 @@ def index(request, course_id:int|None=None):
     return render(request, 'course/index.html', context)
 
 
+class AboutView(TemplateView):
+    """Only for About button"""
+    template_name = 'course/about.html'
 
 
-
-
-class CourseListView(ListView):
-    """This view is for displaying courses list"""
+class CourseBaseListView(ListView):
+    """This view is for displaying courses list. Index html button Courses"""
     model = Subjects, Course
-    template_name = 'course/course.html'
+    template_name = 'course/course_base.html'
 
     def get_queryset(self):
         """subjects for Subject model"""
@@ -46,18 +47,50 @@ class CourseListView(ListView):
         return context
 
 
+class CourseShowListView(ListView):
+    """Bu course_list.html uchun courseni subject_id bn olish uchun"""
+    model = Course
+    template_name = 'course/course_list.html'
+    context_object_name = 'courses'
+
+    def get_queryset(self):
+        subject_id = self.kwargs.get('subject_id')
+        self.subject = get_object_or_404(Subjects, id=subject_id)
+        return Course.objects.filter(subject=self.subject)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['subjects'] = self.subject
+        context['all_subjects'] = Subjects.objects.all()  # Add all subjects
+        return context
+
+
+class CourseDetailShowView(DetailView):
+    """This is for showing all courses when entered by its id"""
+    model = Course
+    template_name = 'course/course_detail.html'
+    context_object_name = 'course'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['course_video'] = CourseVideSave.objects.all()
+        return context
+
+
+
 class CourseDetailView(DetailView):
     """This view is for showing details for all courses"""
     template_name = 'course/course_detail.html'
     model = Course
     context_object_name = 'course'
+    courses = Course.objects.all
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+    #     course=self.get_object()
+    #     courses = course.objects.filter(pk=course.pk)
+    #     context['courses'] = courses
+    #     return context
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        course=self.get_object()
-        teachers = Teacher.objects.filter(group__course=course).distinct()
-        context['teachers'] = teachers
-        return context
 
 
 class TeacherListView(ListView):
@@ -78,9 +111,6 @@ class TeacherDetailView(DetailView):
         context['courses_taught'] = Course.objects.filter(group__teacher=teacher).distinct()
         return context
 
-
-
-
-
-class AboutView(TemplateView):
-    template_name = 'course/about.html'
+def course_detail_show(request):
+    """Just protytipe for course_detail.html"""
+    return render(request, 'course/course_detail.html')

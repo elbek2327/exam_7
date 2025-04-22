@@ -1,4 +1,4 @@
-from django.db import models
+# from django.db import models
 
 # Create your models here.
 from django.db import models
@@ -13,6 +13,7 @@ class CustomUserManager(BaseUserManager):
         email = self.normalize_email(email)
         user = self.model(email=email, **extra_fields)
         user.set_password(password)
+        extra_fields.setdefault('is_active', True)
         user.save()
         return user
 

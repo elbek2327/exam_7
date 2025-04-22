@@ -24,7 +24,8 @@ class Subjects(models.Model): #Category
 class Course(models.Model):
     """This model works as courses for each subject and also makes student connected to course too."""
     title = models.CharField(max_length=100)
-    description = models.TextField(null=True, blank=True)
+    less_description = models.TextField(null=True, blank=True) #Detailda kichik qismida chiqadi
+    description = models.TextField(null=True, blank=True) #detailda katta qismida chiqadi
     image = models.ImageField(null=True, blank=True)
     price = models.DecimalField(max_digits=14, decimal_places=0)
     student_study = models.IntegerField(null=True, blank=True)
@@ -40,6 +41,20 @@ class Course(models.Model):
 
     class Meta:
         verbose_name_plural = "Courses"
+
+# Course video model
+class CourseVideSave(models.Model):
+    title = models.CharField(max_length=100)
+    description = models.TextField(null=True, blank=True)
+    course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='videos', null=True,blank=True)
+    video = models.FileField(null=True, blank=True, upload_to='media/course_videos')
+
+    class Meta:
+        verbose_name_plural = "Course Videos"
+
+    def __str__(self):
+        return f"Video title - {self.title} - Related Course - {self.course}"
+
 
 
 class Teacher(models.Model):
@@ -83,3 +98,4 @@ class Student(models.Model):
         verbose_name_plural = "Students"
 
 
+# video save model for Courses

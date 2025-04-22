@@ -1,0 +1,78 @@
+{% extends 'course/base/base.html' %}
+{% load static %}
+{% load price_filters %}
+{% block title %}Courses{% endblock %}
+{% block course %}
+
+
+    <!-- Header Start -->
+    <div class="container-fluid page-header" style="margin-bottom: 90px;">
+        <div class="container">
+            <div class="d-flex flex-column justify-content-center" style="min-height: 300px">
+                <h3 class="display-4 text-white text-uppercase">Courses</h3>
+                <div class="d-inline-flex text-white">
+                    <p class="m-0 text-uppercase"><a class="text-white" href="">Home</a></p>
+                    <i class="fa fa-angle-double-right pt-1 px-3"></i>
+                    <p class="m-0 text-uppercase">Courses</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Header End -->
+
+
+    <!-- Category Start -->
+    <!-- Category Start -->
+
+
+    <!-- Courses Start -->
+    <div class="container-fluid py-5">
+    <div class="container py-5">
+        <div class="text-center mb-5">
+            <h5 class="text-primary text-uppercase mb-3" style="letter-spacing: 5px;">Courses</h5>
+            <h1>Our Popular Courses</h1>
+        </div>
+
+        <div class="row">
+    {% for course in courses %}
+    <div class="col-lg-4 col-md-6 mb-4">
+        <div class="card shadow-sm h-100">
+            {% if course.image %}
+            <img src="{{ course.image.url }}" class="card-img-top img-fluid" alt="{{ course.title }}">
+            {% else %}
+            <div class="bg-light text-center py-4">
+                <i class="fas fa-image fa-3x text-secondary"></i>
+                <p class="text-muted mt-2">No Image Available</p>
+            </div>
+            {% endif %}
+            <div class="card-body bg-light d-flex flex-column">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <small class="text-muted"><i class="far fa-clock mr-2"></i>Duration - {{ course.duration }}<i>months</i></small>
+
+                </div>
+                <h5 class="card-title"><a href="{% url 'course:course_detail' pk=course.id %}" class="text-dark stretched-link">{{ course.title }}</a></h5>
+                <p class="card-text text-muted">{{ course.description|truncatewords:20 }}</p>
+                <h6 class="card-subtitle text-primary">{{ course.price|format_price }}so'm</h6>
+
+            </div>
+            <div class="card-footer bg-transparent border-top-0 p-3">
+                <div class="d-flex justify-content-between mb-3">
+                                <small class="m-0"><i class="fa fa-users text-primary mr-2"></i>{{ course.student_study }} Students</small>
+                                <small class="m-0"><i class="far fa-clock text-primary mr-2"></i>{{ course.lesson_hours }} Hours</small>
+                            </div>
+                <div class="d-flex justify-content-between align-items-center">
+                    <small class="text-warning"><i class="fas fa-star"></i>{{ course.rating }}</small>
+                    </div>
+                <div class="mt-auto">
+                    <a href="#" class="btn btn-outline-primary btn-sm">View Details</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+    </div>
+</div>
+    <!-- Courses End -->
+
+{% endblock %}

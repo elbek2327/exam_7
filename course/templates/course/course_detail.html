@@ -1,0 +1,177 @@
+ <!DOCTYPE html>
+ <html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Advanced TypeScript Course</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+  body {
+  font-family: 'Inter', sans-serif;
+  }
+  .container {
+  max-width: 100%;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  }
+  @media (min-width: 576px) {
+  .container {
+  max-width: 540px;
+  }
+  }
+  @media (min-width: 768px) {
+  .container {
+  max-width: 720px;
+  }
+  }
+  @media (min-width: 992px) {
+  .container {
+  max-width: 960px;
+  }
+  }
+  @media (min-width: 1200px) {
+  .container {
+  max-width: 1140px;
+  }
+  }
+  @media (min-width: 1400px) {
+  .container {
+  max-width: 1320px;
+  }
+  }
+  .bg-cover {
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  }
+  </style>
+ </head>
+ <body class="bg-gray-100">
+  <header class="bg-white shadow-md py-4">
+  <div class="container">
+  <div class="flex justify-between items-center">
+  <a href="#" class="text-xl font-bold text-blue-600">Sammi Academy</a>
+  <nav class="hidden md:block">
+  <ul class="flex space-x-6">
+  <li><a href="#" class="text-gray-700 hover:text-blue-600 transition-colors">Courses</a></li>
+  <li><a href="#" class="text-gray-700 hover:text-blue-600 transition-colors">Projects</a></li>
+  <li><a href="#" class="text-gray-700 hover:text-blue-600 transition-colors">About Us</a></li>
+  </ul>
+  </nav>
+
+
+
+  <button class="md:hidden text-gray-500 focus:outline-none" id="mobile-menu-button">
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+  </svg>
+  </button>
+  </div>
+  </div>
+  </header>
+  <div id="mobile-menu" class="hidden fixed top-0 left-0 w-full h-full bg-gray-900 bg-opacity-90 z-50">
+  <div class="bg-white w-80 h-full absolute right-0 p-6">
+  <div class="flex justify-end mb-4">
+  <button id="mobile-menu-close-button" class="text-gray-700 focus:outline-none">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
+  <path fill-rule="evenodd" d="M5.47 5.47a.75.75 0 011.06 0L12 10.94l5.47-5.47a.75.75 0 111.06 1.06L13.06 12l5.47 5.47a.75.75 0 01-1.06 1.06L12 13.06l-5.47 5.47a.75.75 0 01-1.06-1.06L10.94 12 5.47 6.53a.75.75 0 010-1.06z" clip-rule="evenodd" />
+  </svg>
+  </button>
+  </div>
+  <nav class="block">
+  <ul class="space-y-4">
+  <li><a href="#" class="block text-lg text-gray-700 hover:text-blue-600 transition-colors">Courses</a></li>
+  <li><a href="#" class="block text-lg text-gray-700 hover:text-blue-600 transition-colors">Projects</a></li>
+  <li><a href="#" class="block text-lg text-gray-700 hover:text-blue-600 transition-colors">About Us</a></li>
+  </ul>
+  </nav>
+  </div>
+  </div>
+
+
+  <main class="container py-8">
+  <section class="bg-cover rounded-lg py-20 px-8" style="background-image: url('https://www.sammi.ac/uploads/images/courses/631d4598e9837.webp');">
+  <div class="text-white">
+  <h1 class="text-4xl font-bold">{{ course.title }}</h1>
+  <p class="mt-4 text-lg">{{ course.less_description }}</p>
+  </div>
+  </section>
+  <section class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
+  <div>
+  <h2 class="text-2xl font-semibold text-gray-800 mb-4">Kurs haqida</h2>
+  <p class="text-gray-700 leading-relaxed">{{ course.description }}</p>
+  </div>
+  <div>
+  <h2 class="text-2xl font-semibold text-gray-800 mb-4">Nima uchun aynan biz?</h2>
+  <ul class="list-disc list-inside text-gray-700 space-y-2">
+  <li>Tajribali o'qituvchilar</li>
+  <li>Amaliy mashg'ulotlarga yo'naltirilganlik</li>
+  <li>Qulay o'quv muhiti</li>
+  <li>Doimiy qo'llab-quvvatlash</li>
+  </ul>
+  </div>
+  </section>
+
+
+      <!--Videolar-->
+  <section class="mt-8">
+  <h2 class="text-2xl font-semibold text-gray-800 mb-4">Kurs dasturi</h2>
+
+      <div class="space-y-4">
+  <div class="bg-white rounded-lg shadow-md p-4">
+  <h3 class="text-lg font-semibold text-blue-600">{{ course_video.title }}</h3>
+  <p class="text-gray-700">TypeScript'ga kirish, o'rnatish, konfiguratsiya</p>
+  </div>
+  <div class="bg-white rounded-lg shadow-md p-4">
+  <h3 class="text-lg font-semibold text-blue-600">2-modul: Asosiy tiplar</h3>
+  <p class="text-gray-700">Number, string, boolean, null, undefined, void, any, never</p>
+  </div>
+  <div class="bg-white rounded-lg shadow-md p-4">
+  <h3 class="text-lg font-semibold text-blue-600">3-modul: Murakkab tiplar</h3>
+  <p class="text-gray-700">Array, tuple, object, enum, union, intersection</p>
+  </div>
+  <div class="bg-white rounded-lg shadow-md p-4">
+  <h3 class="text-lg font-semibold text-blue-600">4-modul: Funksiyalar</h3>
+  <p class="text-gray-700">Funksiya tiplari, parametrlar, qaytariladigan qiymatlar, yuklanish</p>
+  </div>
+  <div class="bg-white rounded-lg shadow-md p-4">
+  <h3 class="text-lg font-semibold text-blue-600">5-modul: Interfeyslar</h3>
+  <p class="text-gray-700">Interfeys ta'rifi, merosxo'rlik, gibrid tiplar</p>
+  </div>
+  <div class="bg-white rounded-lg shadow-md p-4">
+  <h3 class="text-lg font-semibold text-blue-600">6-modul: Klasslar</h3>
+  <p class="text-gray-700">Klass ta'rifi, xususiyatlar, metodlar, merosxo'rlik, inkapsulyatsiya</p>
+  </div>
+  <div class="bg-white rounded-lg shadow-md p-4">
+  <h3 class="text-lg font-semibold text-blue-600">7-modul: Generiklar</h3>
+  <p class="text-gray-700">Generik funksiyalar, interfeyslar, klasslar, cheklovlar</p>
+  </div>
+  <div class="bg-white rounded-lg shadow-md p-4">
+  <h3 class="text-lg font-semibold text-blue-600">8-modul: Conditional va mapped type'lar</h3>
+  <p class="text-gray-700">Conditional type'lar, mapped type'lar, infer</p>
+  </div>
+  <div class="bg-white rounded-lg shadow-md p-4">
+  <h3 class="text-lg font-semibold text-blue-600">9-modul: Dekoratorlar</h3>
+  <p class="text-gray-700">Klass, metod, property, parametr dekoratorlari</p>
+  </div>
+  <div class="bg-white rounded-lg shadow-md p-4">
+  <h3 class="text-lg font-semibold text-blue-600">10-modul: Modullilik</h3>
+  <p class="text-gray-700">Modullarni yaratish, import qilish, export qilish</p>
+  </div>
+  </div>
+  </section>
+  </main>
+  <script>
+  const mobileMenuButton = document.getElementById('mobile-menu-button');
+  const mobileMenu = document.getElementById('mobile-menu');
+  const mobileMenuCloseButton = document.getElementById('mobile-menu-close-button');
+  mobileMenuButton.addEventListener('click', () => {
+  mobileMenu.classList.remove('hidden');
+  });
+  mobileMenuCloseButton.addEventListener('click', () => {
+  mobileMenu.classList.add('hidden');
+  });
+  </script>
+ </body>
+ </html>

@@ -1,6 +1,6 @@
 from django.contrib import admin
 # from django.contrib.auth.models import Group
-from course.models import Subjects, Course, Student, Teacher
+from course.models import Subjects, Course, Teacher, CourseVideSave
 
 
 # Register your models here.
@@ -32,8 +32,10 @@ class TeacherAdmin(admin.ModelAdmin):
 
 
 
-@admin.register(Student)
-class StudentAdmin(admin.ModelAdmin):
-    list_display = ('id','student_id_number', 'first_name','last_name', 'email')
-    search_fields = ('first_name', 'email')
-
+# @admin.register(Student)
+# class StudentAdmin(admin.ModelAdmin):
+#     list_display = ('id','student_id_number', 'first_name','last_name', 'email')
+#     search_fields = ('first_name', 'email')
+@admin.register(CourseVideSave)
+class CourseVideAdmin(admin.ModelAdmin):
+    list_display = ('id','title', 'description', 'course', 'video')

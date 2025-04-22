@@ -1,0 +1,438 @@
+{#{% load static %}#}
+{##}
+{#<!DOCTYPE html>#}
+{#<html lang="en-US" dir="ltr">#}
+{##}
+{#<head>#}
+{#    <meta charset="utf-8">#}
+{#    <meta http-equiv="X-UA-Compatible" content="IE=edge">#}
+{#    <meta name="viewport" content="width=device-width, initial-scale=1">#}
+{##}
+{##}
+{#    <!-- ===============================================-->#}
+{#    <!--    Document Title-->#}
+{#    <!-- ===============================================-->#}
+{#    <title>Falcon | Dashboard &amp; Web App Template</title>#}
+{##}
+{##}
+{#    <!-- ===============================================-->#}
+{#    <!--    Favicons-->#}
+{#    <!-- ===============================================-->#}
+{##}
+{#    <meta name="theme-color" content="#ffffff">#}
+{##}
+{##}
+{##}
+{#    <!-- ===============================================-->#}
+{#    <!--    Stylesheets-->#}
+{#    <!-- ===============================================-->#}
+{#    <link rel="preconnect" href="https://fonts.gstatic.com">#}
+{#    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,500,600,700%7cPoppins:300,400,500,600,700,800,900&amp;display=swap"#}
+{#          rel="stylesheet">#}
+{##}
+{##}
+{#    <link rel="preconnect" href="https://fonts.gstatic.com">#}
+{#    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,500,600,700%7cPoppins:300,400,500,600,700,800,900&amp;display=swap"#}
+{#          rel="stylesheet">#}
+{#    <script>#}
+{#        var isRTL = JSON.parse(localStorage.getItem('isRTL'));#}
+{#        if (isRTL) {#}
+{#            var linkDefault = document.getElementById('style-default');#}
+{#            var userLinkDefault = document.getElementById('user-style-default');#}
+{#            linkDefault.setAttribute('disabled', true);#}
+{#            userLinkDefault.setAttribute('disabled', true);#}
+{#            document.querySelector('html').setAttribute('dir', 'rtl');#}
+{#        } else {#}
+{#            var linkRTL = document.getElementById('style-rtl');#}
+{#            var userLinkRTL = document.getElementById('user-style-rtl');#}
+{#            linkRTL.setAttribute('disabled', true);#}
+{#            userLinkRTL.setAttribute('disabled', true);#}
+{#        }#}
+{#    </script>#}
+{#</head>#}
+{##}
+{##}
+{#<body>#}
+{##}
+{#<!-- ===============================================-->#}
+{#<!--    Main Content-->#}
+{#<!-- ===============================================-->#}
+{#<main class="main" id="top">#}
+{#    <div class="container" data-layout="container">#}
+{#        <script>#}
+{#            var isFluid = JSON.parse(localStorage.getItem('isFluid'));#}
+{#            if (isFluid) {#}
+{#                var container = document.querySelector('[data-layout]');#}
+{#                container.classList.remove('container');#}
+{#                container.classList.add('container-fluid');#}
+{#            }#}
+{#        </script>#}
+{#        <div class="row flex-center min-vh-100 py-6">#}
+{##}
+{#                <div class="card">#}
+{#                    <div class="card-body p-4 p-sm-5">#}
+{#                        <div class="row flex-between-center mb-2">#}
+{#                            <div class="col-auto">#}
+{#                                <h5>Register</h5>#}
+{#                            </div>#}
+{#                            <div class="col-auto fs--1 text-600"><span class="mb-0 undefined">Have an account?</span>#}
+{#                                <span><a href="{% url 'user:login_page' %}">Login</a></span></div>#}
+{#                        </div>#}
+{##}
+{##}
+{#                        <!--Registering user-->#}
+{#                        <form method="POST" action="{% url 'user:register_page' %}" novalidate>#}
+{#                            {% csrf_token %}#}
+{#                            <div class="mb-3">#}
+{#                                {{ form.non_field_errors }}#}
+{#                            </div>#}
+{#                            <div class="mb-3">#}
+{#                                <label for="name" class="form-label">Full Name</label>#}
+{#                                <input#}
+{#                                        class="form-control {% if form.name.errors %}is-invalid{% endif %}"#}
+{#                                        type="text"#}
+{#                                        placeholder="Full Name"#}
+{#                                        name="name"#}
+{#                                        id="name"#}
+{#                                        value="{{ form.name.value|default:'' }}"#}
+{#                                >#}
+{#                                {% for error in form.name.errors %}#}
+{#                                    <div class="invalid-feedback">{{ error }}</div>#}
+{#                                {% endfor %}#}
+{#                            </div>#}
+{##}
+{#                            <div class="mb-3">#}
+{#                                <label for="email" class="form-label">Email Address</label>#}
+{#                                <input#}
+{#                                        class="form-control {% if form.email.errors %}is-invalid{% endif %}"#}
+{#                                        type="email"#}
+{#                                        placeholder="Email address"#}
+{#                                        name="email"#}
+{#                                        id="email"#}
+{#                                        value="{{ form.email.value|default:'' }}"#}
+{#                                >#}
+{#                                {% for error in form.email.errors %}#}
+{#                                    <div class="invalid-feedback">{{ error }}</div>#}
+{#                                {% endfor %}#}
+{#                            </div>#}
+{##}
+{#                            <div class="row gx-2">#}
+{#                                <div class="mb-3 col-sm-6">#}
+{#                                    <label for="password" class="form-label">Password</label>#}
+{#                                    <input#}
+{#                                            class="form-control {% if form.password.errors %}is-invalid{% endif %}"#}
+{#                                            type="password"#}
+{#                                            placeholder="Password"#}
+{#                                            name="password"#}
+{#                                            id="password"#}
+{#                                    >#}
+{#                                    {% for error in form.password.errors %}#}
+{#                                        <div class="invalid-feedback">{{ error }}</div>#}
+{#                                    {% endfor %}#}
+{#                                </div>#}
+{##}
+{#                                <div class="mb-3 col-sm-6">#}
+{#                                    <label for="confirm_password" class="form-label">Confirm Password</label>#}
+{#                                    <input#}
+{#                                            class="form-control {% if form.confirm_password.errors %}is-invalid{% endif %}"#}
+{#                                            type="password"#}
+{#                                            placeholder="Confirm Password"#}
+{#                                            name="confirm_password"#}
+{#                                            id="confirm_password"#}
+{#                                    >#}
+{#                                    {% for error in form.confirm_password.errors %}#}
+{#                                        <div class="invalid-feedback">{{ error }}</div>#}
+{#                                    {% endfor %}#}
+{#                                </div>#}
+{#                            </div>#}
+{##}
+{##}
+{##}
+{#                            <div class="mb-3">#}
+{#                                <button class="btn btn-primary d-block w-100 mt-3" type="submit">Register</button>#}
+{#                            </div>#}
+{#                        </form>#}
+{##}
+{##}
+{#                        <div class="position-relative mt-4">#}
+{#                            <hr class="bg-300"/>#}
+{#                            <div class="divider-content-center">or register with</div>#}
+{#                        </div>#}
+{#                        <div class="row g-2 mt-2">#}
+{#                            <div class="col-sm-6"><a class="btn btn-outline-google-plus btn-sm d-block w-100"#}
+{#                                                     href="#"><span class="fab fa-google-plus-g me-2"#}
+{#                                                                    data-fa-transform="grow-8"></span> google</a></div>#}
+{#                            <div class="col-sm-6"><a class="btn btn-outline-facebook btn-sm d-block w-100"#}
+{#                                                     href="#"><span class="fab fa-facebook-square me-2"#}
+{#                                                                    data-fa-transform="grow-8"></span> facebook</a>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+{##}
+{#</main>#}
+{#<!-- ===============================================-->#}
+{#<!--    End of Main Content-->#}
+{#<!-- ===============================================-->#}
+{#<!-- ===============================================-->#}
+{#<!--    JavaScripts-->#}
+{#<!-- ===============================================-->#}
+{#<script src="https://polyfill.io/v3/polyfill.min.js?features=window.scroll"></script>#}
+{#</body>#}
+{#</html>#}
+
+{% load static %}
+
+ <!DOCTYPE html>
+ <html lang="en-US" dir="ltr">
+
+ <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Register</title>
+
+  <meta name="theme-color" content="#ffffff">
+
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,500,600,700%7cPoppins:300,400,500,600,700,800,900&amp;display=swap"
+        rel="stylesheet">
+  <script>
+   var isRTL = JSON.parse(localStorage.getItem('isRTL'));
+   if (isRTL) {
+    var linkDefault = document.getElementById('style-default');
+    var userLinkDefault = document.getElementById('user-style-default');
+    linkDefault.setAttribute('disabled', true);
+    userLinkDefault.setAttribute('disabled', true);
+    document.querySelector('html').setAttribute('dir', 'rtl');
+   } else {
+    var linkRTL = document.getElementById('style-rtl');
+    var userLinkRTL = document.getElementById('user-style-rtl');
+    linkRTL.setAttribute('disabled', true);
+    userLinkRTL.setAttribute('disabled', true);
+   }
+  </script>
+  <style>
+   body {
+    background-color: black;
+   }
+
+   .card {
+    background-color: white;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+   }
+
+   .card-body {
+    padding: 3rem;
+   }
+
+   h5 {
+    color: black;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+   }
+
+   .form-label {
+    color: #333;
+    font-weight: 600;
+   }
+
+   .form-control {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+   }
+
+   .form-control:focus {
+    border-color: orange;
+    box-shadow: 0 0 0 0.2rem rgba(255, 165, 0, 0.25);
+   }
+
+   .is-invalid {
+    border-color: #dc3545 !important;
+   }
+
+   .invalid-feedback {
+    color: #dc3545;
+    font-size: 0.875em;
+    margin-top: 0.25rem;
+   }
+
+   .btn-primary {
+    background-color: orange;
+    border-color: orange;
+    color: black;
+    font-weight: 600;
+    border-radius: 5px;
+    padding: 0.8rem 1.5rem;
+   }
+
+   .btn-primary:hover {
+    background-color: #ff8c00;
+    border-color: #ff8c00;
+    color: black;
+   }
+
+   .text-600 a {
+    color: orange;
+   }
+
+   .text-600 a:hover {
+    color: #ff8c00;
+   }
+
+   hr.bg-300 {
+    border-top-color: #eee;
+   }
+
+   .divider-content-center {
+    color: #777;
+   }
+
+   .btn-outline-google-plus {
+    border-color: #dd4b39;
+    color: #dd4b39;
+   }
+
+   .btn-outline-google-plus:hover {
+    background-color: #dd4b39;
+    color: white;
+   }
+
+   .btn-outline-facebook {
+    border-color: #3b5998;
+    color: #3b5998;
+   }
+
+   .btn-outline-facebook:hover {
+    background-color: #3b5998;
+    color: white;
+   }
+  </style>
+ </head>
+
+
+ <body>
+
+ <main class="main" id="top">
+  <div class="container" data-layout="container">
+   <script>
+    var isFluid = JSON.parse(localStorage.getItem('isFluid'));
+    if (isFluid) {
+     var container = document.querySelector('[data-layout]');
+     container.classList.remove('container');
+     container.classList.add('container-fluid');
+    }
+   </script>
+   <div class="row flex-center min-vh-100 py-6">
+    <div class="col-sm-10 col-md-8 col-lg-6 col-xl-5">
+     <div class="card">
+      <div class="card-body p-4 p-sm-5">
+       <div class="row flex-between-center mb-2">
+        <div class="col-auto">
+         <h5>Register</h5>
+        </div>
+        <div class="col-auto fs--1 text-600"><span class="mb-0">Have an account?</span>
+         <span><a href="{% url 'user:login_page' %}">Login</a></span></div>
+       </div>
+
+
+       <form method="POST" action="{% url 'user:register_page' %}" novalidate>
+        {% csrf_token %}
+        <div class="mb-3">
+         {{ form.non_field_errors }}
+        </div>
+        <div class="mb-3">
+         <label for="name" class="form-label">Full Name</label>
+         <input
+               class="form-control {% if form.name.errors %}is-invalid{% endif %}"
+               type="text"
+               placeholder="Full Name"
+               name="name"
+               id="name"
+               value="{{ form.name.value|default:'' }}"
+         >
+         {% for error in form.name.errors %}
+          <div class="invalid-feedback">{{ error }}</div>
+         {% endfor %}
+        </div>
+
+        <div class="mb-3">
+         <label for="email" class="form-label">Email Address</label>
+         <input
+               class="form-control {% if form.email.errors %}is-invalid{% endif %}"
+               type="email"
+               placeholder="Email address"
+               name="email"
+               id="email"
+               value="{{ form.email.value|default:'' }}"
+         >
+         {% for error in form.email.errors %}
+          <div class="invalid-feedback">{{ error }}</div>
+         {% endfor %}
+        </div>
+
+        <div class="row gx-2">
+         <div class="mb-3 col-sm-6">
+          <label for="password" class="form-label">Password</label>
+          <input
+                class="form-control {% if form.password.errors %}is-invalid{% endif %}"
+                type="password"
+                placeholder="Password"
+                name="password"
+                id="password"
+          >
+          {% for error in form.password.errors %}
+           <div class="invalid-feedback">{{ error }}</div>
+          {% endfor %}
+         </div>
+
+         <div class="mb-3 col-sm-6">
+          <label for="confirm_password" class="form-label">Confirm Password</label>
+          <input
+                class="form-control {% if form.confirm_password.errors %}is-invalid{% endif %}"
+                type="password"
+                placeholder="Confirm Password"
+                name="confirm_password"
+                id="confirm_password"
+          >
+          {% for error in form.confirm_password.errors %}
+           <div class="invalid-feedback">{{ error }}</div>
+          {% endfor %}
+         </div>
+        </div>
+
+
+        <div class="mb-3">
+         <button class="btn btn-primary d-block w-100 mt-3" type="submit">Register</button>
+        </div>
+       </form>
+
+
+       <div class="position-relative mt-4">
+        <hr class="bg-300"/>
+        <div class="divider-content-center">or register with</div>
+       </div>
+       <div class="row g-2 mt-2">
+        <div class="col-sm-6"><a class="btn btn-outline-google-plus btn-sm d-block w-100"
+                                 href="#"><span class="fab fa-google-plus-g me-2"
+                                                data-fa-transform="grow-8"></span> google</a></div>
+        <div class="col-sm-6"><a class="btn btn-outline-facebook btn-sm d-block w-100"
+                                 href="#"><span class="fab fa-facebook-square me-2"
+                                                data-fa-transform="grow-8"></span> facebook</a>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </div>
+  </div>
+
+ </main>
+ <script src="https://polyfill.io/v3/polyfill.min.js?features=window.scroll"></script>
+ </body>
+ </html>
